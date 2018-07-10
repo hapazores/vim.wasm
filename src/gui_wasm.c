@@ -1436,6 +1436,24 @@ gui_mch_wait_for_chars(int wtime)
     }
 }
 
+void
+gui_mch_wait_for_chars_async(int wtime, void (*callback)(int))
+{
+    if (input_available()) {
+        callback(OK);
+        return;
+    }
+    if (wtime < 0) {
+        // TODO: Start timer in javascript with wtime
+        return;
+    }
+    if ((wtime - 10) < 0) {
+        callback(FAIL);
+        return;
+    }
+    // TODO: Start timer in javascript with wtime
+}
+
 /* Flush any output to the screen */
 void
 gui_mch_flush(void)
